@@ -1,10 +1,6 @@
 %if 0%{?scl:1}
 %scl_package mod_auth_mellon
-%if "%{scl}" == "httpd24"
-%global sub_prefix sclo-httpd24-
-%else
 %global sub_prefix sclo-%{scl_prefix}
-%endif
 %endif
 
 %if 0%{?scl:1}
