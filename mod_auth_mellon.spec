@@ -1,6 +1,10 @@
 %if 0%{?scl:1}
 %scl_package mod_auth_mellon
-%global sub_prefix sclo-mod_auth_mellon-
+%if "%{scl}" == "httpd24"
+%global sub_prefix sclo-httpd24-
+%else
+%global sub_prefix sclo-%{scl_prefix}
+%endif
 %endif
 
 %if 0%{?scl:1}
@@ -133,7 +137,7 @@ install -m 755 %{SOURCE4} %{buildroot}/%{_libexecdir}/mod_auth_mellon
 %endif
 
 %changelog
-* Fri Jan 22 2016 Jaroslaw Polok <jaroslaw.polok@cern.ch> 
+* Fri Jan 22 2016 Jaroslaw Polok <jaroslaw.polok@cern.ch>  - 0.11.0-2
 - repackage as Software Collection
 
 * Fri Sep 18 2015 John Dennis <jdennis@redhat.com> - 0.11.0-1
