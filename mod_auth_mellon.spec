@@ -28,7 +28,7 @@
 Summary: A SAML 2.0 authentication module for the Apache Httpd Server
 Name: %{?scl:%sub_prefix}mod_auth_mellon
 Version: 0.11.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Group: System Environment/Daemons
 Source0: https://github.com/UNINETT/mod_auth_mellon/releases/download/v%{version}/mod_auth_mellon-%{version}.tar.gz
 Source1: auth_mellon.conf
@@ -109,9 +109,11 @@ install -m 644 %{SOURCE2} %{buildroot}%{_httpd_modconfdir}
 mkdir -p %{buildroot}%{_tmpfilesdir}
 %endif
 
+%if 0%{?rhel} > 6
 %if 0%{!?scl:1}
 mkdir -p %{buildroot}%{?scl:%_scl_root}/%{_tmpfilesdir}
 install -m 644 %{SOURCE3} %{buildroot}%{?scl:%_scl_root}/%{_tmpfilesdir}
+%endif
 %endif
 
 mkdir -p %{buildroot}%{?scl:%_scl_root}/%{my_rundir}/mod_auth_mellon
@@ -138,14 +140,18 @@ install -m 755 %{SOURCE4} %{buildroot}/%{_libexecdir}/mod_auth_mellon
 %else
 %config(noreplace) %{_httpd_modconfdir}/10-auth_mellon.conf
 %config(noreplace) %{_httpd_confdir}/auth_mellon.conf
+%if 0%{?rhel} > 6
 %{_tmpfilesdir}/mod_auth_mellon.conf
+%endif
 %{_httpd_moddir}/mod_auth_mellon.so
-%{_tmpfilesdir}/mod_auth_mellon.conf
 %{_libexecdir}/mod_auth_mellon
 %dir %{my_rundir}/mod_auth_mellon/
 %endif
 
 %changelog
+* Tue Feb 23 2016 Jaroslaw Polok <jaroslaw.polok@cern.ch>  - 0.11.0-4
+- initial candidate build on cbs.centos.org
+
 * Wed Jan 27 2016 Jaroslaw Polok <jaroslaw.polok@cern.ch>  - 0.11.0-3
 - spec file fixes for building on el6 and el7.
 
